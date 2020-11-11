@@ -1,6 +1,5 @@
 package com.weather.api.service.impl;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.weather.api.exception.handler.WeatherForecastNotFoundException;
 import com.weather.api.model.ListData;
 import com.weather.api.model.WeatherRoot;
@@ -11,11 +10,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
-import org.springframework.util.ResourceUtils;
 import org.springframework.web.client.RestTemplate;
 
-import java.io.File;
-import java.io.IOException;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -27,7 +23,6 @@ import java.util.*;
 public class WeatherAPIServiceImpl implements WeatherAPIService {
 
     private final RestTemplate restTemplate;
-    private final Environment environment;
 
     @Value("${weather.api.key}")
     private String key;
@@ -36,24 +31,6 @@ public class WeatherAPIServiceImpl implements WeatherAPIService {
     private String apiUrl;
 
 
-//    @Override
-//    public Map<String, Double> getWeatherForecast(Long zipcode) {
-//
-//        try {
-//            File file = ResourceUtils.getFile("classpath:static/weather-api-response.json");
-//            WeatherRoot response = new ObjectMapper().readValue(file, WeatherRoot.class);
-//
-//            Map<String, Double> map = getTomorrowsPredictedData(response.list);
-//
-//            //getWeatherForecast1(zipcode);
-//
-//            return map;
-//
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        return null;
-//    }
 
     @Override
     public Map<String, Double> getWeatherForecast(Long zipcode) {
