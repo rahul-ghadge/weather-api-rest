@@ -36,27 +36,27 @@ public class WeatherAPIServiceImpl implements WeatherAPIService {
     private String apiUrl;
 
 
+//    @Override
+//    public Map<String, Double> getWeatherForecast(Long zipcode) {
+//
+//        try {
+//            File file = ResourceUtils.getFile("classpath:static/weather-api-response.json");
+//            WeatherRoot response = new ObjectMapper().readValue(file, WeatherRoot.class);
+//
+//            Map<String, Double> map = getTomorrowsPredictedData(response.list);
+//
+//            //getWeatherForecast1(zipcode);
+//
+//            return map;
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        return null;
+//    }
+
     @Override
     public Map<String, Double> getWeatherForecast(Long zipcode) {
-
-        try {
-            File file = ResourceUtils.getFile("classpath:static/weather-api-response.json");
-            WeatherRoot response = new ObjectMapper().readValue(file, WeatherRoot.class);
-
-            Map<String, Double> map = getTomorrowsPredictedData(response.list);
-
-            //getWeatherForecast1(zipcode);
-
-            return map;
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-
-    public Map<String, Double> getWeatherForecast1(Long zipcode) {
 
         log.info("*** Getting Weather forecast for Zipcode :: {}", zipcode);
 
