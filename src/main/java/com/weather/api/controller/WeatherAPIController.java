@@ -47,7 +47,7 @@ public class WeatherAPIController {
             @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content)
     })
     @GetMapping("/{zipCode}")
-    public ResponseEntity<Map<String, Double>> findById(@PathVariable String zipCode) {
+    public ResponseEntity<Map<String, Double>> getWeatherForecastZipcode(@PathVariable String zipCode) {
 
         log.info("*** Getting Weather forecast for zipcode :: {}", zipCode);
 
