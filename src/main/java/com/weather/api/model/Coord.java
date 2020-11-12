@@ -1,8 +1,15 @@
 package com.weather.api.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.io.Serializable;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Coord implements Serializable {
-    public double lat;
-    public double lon;
+    private double lat;
+    private double lon;
 }

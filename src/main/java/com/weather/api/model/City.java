@@ -1,14 +1,21 @@
 package com.weather.api.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.io.Serializable;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class City implements Serializable {
-    public int id;
-    public String name;
-    public Coord coord;
-    public String country;
-    public int population;
-    public int timezone;
-    public int sunrise;
-    public int sunset;
+    private int id;
+    private String name;
+    private Coord coord;
+    private String country;
+    private int population;
+    private int timezone;
+    private int sunrise;
+    private int sunset;
 }

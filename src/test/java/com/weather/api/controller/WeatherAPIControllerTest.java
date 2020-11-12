@@ -1,6 +1,7 @@
 package com.weather.api.controller;
 
 import com.weather.api.exception.handler.InvalidZipcodeException;
+import com.weather.api.model.response.WeatherAPIResponse;
 import com.weather.api.service.WeatherAPIService;
 import org.junit.Assert;
 import org.junit.Test;
@@ -10,9 +11,6 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import static org.mockito.Mockito.anyLong;
 import static org.mockito.Mockito.when;
@@ -38,10 +36,10 @@ public class WeatherAPIControllerTest {
     @Test
     public void getWeatherForecastZipcodeSuccessTest() {
 
-        Map<String, Double> map = new HashMap<>();
+        WeatherAPIResponse weatherAPIResponse = WeatherAPIResponse.builder().build();
 
-        when(service.getWeatherForecast(anyLong())).thenReturn(map);
-        ResponseEntity<Map<String, Double>> responseEntity = controller.getWeatherForecastZipcode("123456");
+        when(service.getWeatherForecast(anyLong())).thenReturn(weatherAPIResponse);
+        ResponseEntity<WeatherAPIResponse> responseEntity = controller.getWeatherForecastZipcode("123456");
 
         Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
     }
@@ -49,6 +47,6 @@ public class WeatherAPIControllerTest {
 
     @Test(expected = InvalidZipcodeException.class)
     public void getWeatherForecastZipcodeFailureTest() {
-        ResponseEntity<Map<String, Double>> responseEntity = controller.getWeatherForecastZipcode("1234");
+        ResponseEntity<WeatherAPIResponse> responseEntity = controller.getWeatherForecastZipcode("1234");
     }
 }

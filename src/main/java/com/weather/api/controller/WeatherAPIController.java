@@ -1,6 +1,7 @@
 package com.weather.api.controller;
 
 import com.weather.api.exception.handler.InvalidZipcodeException;
+import com.weather.api.model.response.WeatherAPIResponse;
 import com.weather.api.service.WeatherAPIService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -47,17 +48,17 @@ public class WeatherAPIController {
             @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content)
     })
     @GetMapping("/{zipCode}")
-    public ResponseEntity<Map<String, Double>> getWeatherForecastZipcode(@PathVariable String zipCode) {
+    public ResponseEntity<WeatherAPIResponse> getWeatherForecastZipcode(@PathVariable String zipCode) {
 
         log.info("*** Getting Weather forecast for zipcode :: {}", zipCode);
 
         if (Objects.isNull(zipCode) || zipCode.trim().length() < 5)
             throw new InvalidZipcodeException("Zipcode should not be null or less than 5 characters");
 
-        Map<String, Double> tomorrowsForecast = service.getWeatherForecast(Long.valueOf(zipCode));
+        WeatherAPIResponse weatherAPIResponse = service.getWeatherForecast(Long.valueOf(zipCode));
 
-        log.info("*** Weather forecast :: {}", tomorrowsForecast);
-        return ResponseEntity.ok().body(tomorrowsForecast);
+        log.info("*** Weather forecast :: {}", weatherAPIResponse);
+        return ResponseEntity.ok().body(weatherAPIResponse);
     }
 
 

@@ -3,10 +3,10 @@ package com.weather.api.service.impl;
 import com.weather.api.exception.handler.WeatherForecastNotFoundException;
 import com.weather.api.model.ListData;
 import com.weather.api.model.WeatherRoot;
+import com.weather.api.model.response.WeatherAPIResponse;
 import com.weather.api.service.WeatherAPIService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -23,32 +23,34 @@ import java.util.*;
 public class WeatherAPIServiceImpl implements WeatherAPIService {
 
     private final RestTemplate restTemplate;
-
-    @Value("${weather.api.key}")
-    private String key;
-
-    @Value("${weather.api.url}")
-    private String apiUrl;
-
+    private final Environment environment;
 
 
     @Override
-    public Map<String, Double> getWeatherForecast(Long zipcode) {
+    public WeatherAPIResponse getWeatherForecast(Long zipcode) {
 
         log.info("*** Getting Weather forecast for Zipcode :: {}", zipcode);
+
+        String apiUrl = environment.getProperty("weather.api.url");
+        String key = environment.getProperty("weather.api.key");
 
         String api = String.format(apiUrl, zipcode, key);
         WeatherRoot response = restTemplate.getForObject(api, WeatherRoot.class);
         log.info("*** Weather forecast for provided Zipcode :: {}", response);
 
-        if (Objects.isNull(response) || CollectionUtils.isEmpty(response.list)) {
+        if (Objects.isNull(response) || CollectionUtils.isEmpty(response.getList())) {
             throw new WeatherForecastNotFoundException("Weather forecast for tomorrow not found for provided zipcode");
         }
 
-        Map<String, Double> map = getTomorrowsPredictedData(response.list);
-        log.info("*** Weather forecast for tomorrow :: {}", map);
+        WeatherAPIResponse weatherAPIResponse = WeatherAPIResponse.builder()
+                .cityName(response.getCity().getName())
+                .country(response.getCity().getCountry())
+                .tomorrowsForecast(getTomorrowsPredictedData(response.getList()))
+                .zipcode(zipcode)
+                .build();
+        log.info("*** Weather forecast for tomorrow :: {}", weatherAPIResponse);
 
-        return map;
+        return weatherAPIResponse;
     }
 
 
@@ -59,14 +61,14 @@ public class WeatherAPIServiceImpl implements WeatherAPIService {
         Map<String, Double> hourlyTemperature = new HashMap<>();
         LocalDate tomorrowsLocalDate = LocalDate.now().plusDays(1);
 
-        list.stream().forEach(listData -> {
-                    LocalDate forecastedDate = Instant.ofEpochMilli(new Date(listData.dt * 1000)
+        list.forEach(listData -> {
+                    LocalDate forecastedDate = Instant.ofEpochMilli(new Date(listData.getDt() * 1000)
                             .getTime())
                             .atZone(ZoneId.systemDefault())
                             .toLocalDate();
 
                     if (tomorrowsLocalDate.getDayOfMonth() == forecastedDate.getDayOfMonth()) {
-                        hourlyTemperature.put(listData.dt_txt, listData.main.temp_min);
+                        hourlyTemperature.put(listData.getDt_txt(), listData.getMain().getTemp_min());
                     }
                 }
         );

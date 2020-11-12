@@ -1,16 +1,23 @@
 package com.weather.api.model;
 
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.io.Serializable;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Main implements Serializable {
-    public double temp;
-    public double feels_like;
-    public double temp_min;
-    public double temp_max;
-    public int pressure;
-    public int sea_level;
-    public int grnd_level;
-    public int humidity;
-    public double temp_kf;
+    private double temp;
+    private double feels_like;
+    private double temp_min;
+    private double temp_max;
+    private int pressure;
+    private int sea_level;
+    private int grnd_level;
+    private int humidity;
+    private double temp_kf;
 }
