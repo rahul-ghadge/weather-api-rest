@@ -42,7 +42,7 @@ public class WeatherAPIController {
     @Operation(summary = "Get a Weather forecast by Zipcode")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Found the data",
-                    content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = Map.class))}),
+                    content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = WeatherAPIResponse.class))}),
             @ApiResponse(responseCode = "400", description = "Invalid Zipcode", content = @Content),
             @ApiResponse(responseCode = "404", description = "Weather forecast not found", content = @Content),
             @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content)
