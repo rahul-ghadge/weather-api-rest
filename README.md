@@ -1,10 +1,10 @@
 # Weather API Rest
 
 This project we are consuming **Open Weather API** for future forecast.
-In this app we are using Spring, RestTemplate, .     
+In this app we are using Spring boot, RestTemplate, Junit and Mockito.     
 
 Deployed this application on heroku server, endpoint is available on:
-## [https://https://weather-api-rest.herokuapp.com/](https://https://weather-api-rest.herokuapp.com/)
+## [https://weather-api-rest.herokuapp.com/](https://weather-api-rest.herokuapp.com/)
 
 If running on local machine then endpoint is available on:
 ## [http://localhost:8080](http://localhost:8080)
@@ -24,6 +24,7 @@ If running on local machine then endpoint is available on:
 - Eclipse or IntelliJ IDEA (or any preferred IDE) with embedded Gradle
 - Maven (version >= 3.6.0)
 - Postman (or any RESTful API testing tool)
+- Any browser
 
 
 ## API Endpoints
@@ -35,13 +36,18 @@ If running on local machine then endpoint is available on:
     Output:: 
     ```
     {
-      "2020-11-12 03:00:00": 291.7,
-      "2020-11-12 09:00:00": 291.57,
-      "2020-11-12 15:00:00": 286.94,
-      "2020-11-12 18:00:00": 285.99,
-      "2020-11-12 12:00:00": 289.25,
-      "2020-11-11 21:00:00": 294.28,
-      "2020-11-12 00:00:00": 293.01,
-      "2020-11-12 06:00:00": 291.99
+      "cityName": "New York",
+      "country": "US",
+      "zipcode": 10001,
+      "tomorrowsForecast": {
+        "2020-11-13 21:00:00": 286.19,
+        "2020-11-13 12:00:00": 284.32,
+        "2020-11-13 18:00:00": 285.22,
+        "2020-11-13 06:00:00": 284.29,
+        "2020-11-13 03:00:00": 284.68,
+        "2020-11-13 09:00:00": 284.31,
+        "2020-11-13 00:00:00": 284.63,
+        "2020-11-13 15:00:00": 285.61
+      }
     }
     ```
